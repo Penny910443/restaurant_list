@@ -1,0 +1,32 @@
+# Restaurant List
+My web application for fantastic restaurants
+
+#### Home Page
+![Home Page](https://raw.githubusercontent.com/Penny910443/restaurant_list/main/public/pictures/homepage.png "Home Page")
+#### Detail Page
+![Detail Page](https://raw.githubusercontent.com/Penny910443/restaurant_list/main/public/pictures/details.png "Detail Page")
+
+## Features
+- listing restaurant from restaurant api
+- searching restaurant by name
+- searching restaurant by category
+- showing restaurant detail when you click it
+
+## How to use
+- please confirm you have already installed node.js and npm first
+
+- clone this repository to your computer
+
+
+
+- use the terminal to access the folder , and then type the command below
+    npm install
+
+- after the installation complete , keep typing
+    npm run start
+
+- if you see this message means the server is on, you can use that URL to go into the website
+    Express is listening on http://localhost:3000
+
+- if you want to stop it, use command below
+ ctrl + c
