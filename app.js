@@ -27,11 +27,22 @@ app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }))
 app.set('view engine', 'hbs')
 
 app.use(express.static('public'))
+app.use(express.urlencoded({ extended: true }))
 app.get('/', (req, res) => {
   Restaurant.find()
     .lean()
     .then(restaurants => res.render('index', { restaurants }))
     .catch(error => console.error(error))
+})
+
+app.get('/restaurants/new', (req, res) => {
+  res.render('new')
+})
+
+app.post('/restaurants', (req, res) => {
+  Restaurant.create(req.body)
+    .then(() => res.redirect('/'))
+    .catch(error => console.log(error))
 })
 
 app.get('/restaurants/:restaurant_id', (req, res) => {
