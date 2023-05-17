@@ -2,9 +2,12 @@ const express = require('express')
 const app = express()
 const port = 3000
 const mongoose = require('mongoose')
+const methodOverride = require('method-override')
 
 const exphbs = require('express-handlebars')
 const Restaurant = require('./models/restaurant')
+const routes = require('./routes')
+
 
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
@@ -28,71 +31,11 @@ app.set('view engine', 'hbs')
 
 app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }))
-app.get('/', (req, res) => {
-  Restaurant.find()
-    .lean()
-    .then(restaurants => res.render('index', { restaurants }))
-    .catch(error => console.error(error))
-})
+app.use(methodOverride('_method'))
+app.use(routes)
 
-app.get('/restaurants/new', (req, res) => {
-  res.render('new')
-})
 
-app.post('/restaurants', (req, res) => {
-  Restaurant.create(req.body)
-    .then(() => res.redirect('/'))
-    .catch(error => console.log(error))
-})
 
-app.get('/restaurants/:restaurant_id', (req, res) => {
-  const restaurant_id = req.params.restaurant_id
-  Restaurant.findById(restaurant_id)
-    .lean()
-    .then(restaurant => res.render('show', { restaurant }))
-    .catch(error => console.log(error))
-})
-
-app.get('/search', (req, res) => {
-  if (!req.query.keyword) {
-    return res.redirect('/')
-  }
-  const keyword = req.query.keyword.trim().toLowerCase()
-  Restaurant.find()
-    .lean()
-    .then(restaurants => {
-      const filteredRestaurant = restaurants.filter(function (restaurant) {
-        const searchByName = restaurant.name.trim().toLowerCase().includes(keyword)
-        const searchByCategory = restaurant.category.trim().includes(keyword)
-        return searchByName || searchByCategory
-      })
-      res.render('index', { restaurants: filteredRestaurant, keyword })
-    })
-    .catch(error => console.log(error))
-})
-
-app.get('/restaurants/:restaurant_id/edit', (req, res) => {
-  const restaurant_id = req.params.restaurant_id
-  Restaurant.findById(restaurant_id)
-    .lean()
-    .then(restaurant => res.render('edit', { restaurant }))
-    .catch(error => console.log(error))
-})
-
-app.post('/restaurants/:restaurant_id/edit', (req, res) => {
-  const restaurant_id = req.params.restaurant_id
-  Restaurant.findByIdAndUpdate(restaurant_id, req.body)
-    .then(() => res.redirect(`/restaurants/${restaurant_id}`))
-    .catch(error => console.log(error))
-})
-
-app.post('/restaurants/:restaurant_id/delete', (req, res) => {
-  const restaurant_id = req.params.restaurant_id
-  Restaurant.findById(restaurant_id)
-    .then(restaurant => restaurant.remove())
-    .then(() => res.redirect('/'))
-    .catch(error => console.log(error))
-})
 
 app.listen(port, () => {
   console.log(`Express is listening localhost:${port}`)
