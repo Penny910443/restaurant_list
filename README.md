@@ -2,9 +2,9 @@
 My web application for fantastic restaurants
 
 #### Home Page
-![Home Page](https://raw.githubusercontent.com/Penny910443/restaurant_list/main/public/pictures/homepage.png "Home Page")
+![Home Page](https://github.com/Penny910443/restaurant_list/blob/main/public/pictures/updatedhomepage2.png "Home Page")
 #### Detail Page
-![Detail Page](https://raw.githubusercontent.com/Penny910443/restaurant_list/main/public/pictures/details.png "Detail Page")
+![Detail Page](https://github.com/Penny910443/restaurant_list/blob/main/public/pictures/details2.png "Detail Page")
 
 ## Features
 - listing restaurant from restaurant api
